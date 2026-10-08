@@ -17,7 +17,9 @@ import numpy as np
 from datetime import datetime
 from pathlib import Path
 
-from app.config import BASE_THRESHOLD, ESCALATION_BAND, SIGNATURES_DIR
+from app.config import (
+    BASE_THRESHOLD, ESCALATION_BAND, SIGNATURES_DIR, AGING_MAX_ALLOWANCE,
+)
 from app.database.db import get_db, row_to_dict, rows_to_dicts
 from app.models.embedding import (
     extract_embedding, compare_embeddings, compare_embedding_to_image,
@@ -142,8 +144,8 @@ def verify_signature(user_id: str, image_path: str) -> dict:
     )
 
     # ── Step 5: Make decision ──
-    threshold = profile.adjusted_threshold
-    decision, adjusted_score = _make_decision(raw_score, threshold, profile)
+    decision, adjusted_score, threshold = _make_decision(
+        raw_score, profile.adjusted_threshold, profile)
 
     # ── Step 6: Generate explanation ──
     reason = generate_explanation(profile, raw_score, decision)
@@ -220,6 +222,7 @@ def verify_signature(user_id: str, image_path: str) -> dict:
         "confidence": round(profile.confidence, 4),
         "tenure_months": profile.tenure_months,
         "trust_buffer": round(profile.trust_buffer, 4),
+        "aging_allowance": round(profile.aging_allowance, 4),
         "reason": reason,
         "stroke_features": stroke_features,
         "drift_details": profile.details,
@@ -228,34 +231,44 @@ def verify_signature(user_id: str, image_path: str) -> dict:
     }
 
 
-def _make_decision(raw_score: float, threshold: float, profile: DriftProfile) -> tuple:
+def _make_decision(raw_score: float, threshold: float,
+                   profile: DriftProfile) -> tuple:
     """
-    Three-way decision logic:
-      - approved: score >= threshold AND no forgery pattern
+    Three-way decision logic. Returns (decision, adjusted_score, threshold):
+      - approved: score >= effective threshold AND no forgery pattern
       - escalated: score in escalation band OR medical event detected
       - rejected: score below (threshold - escalation band) OR forgery detected
     """
     # Override: forgery detected → always reject
     if profile.classification == "forgery_attempt" and profile.confidence > 0.6:
-        return "rejected", raw_score
+        return "rejected", raw_score, threshold
 
     # Override: medical event → always escalate
     if profile.classification == "medical_event":
-        return "escalated", raw_score
+        return "escalated", raw_score, threshold
+
+    # ── Aging adaptation ──
+    # A signature that drifts slowly, consistently and with low volatility
+    # is aging, not fraud. Judge it against where the trend predicts it
+    # should be today rather than against the enrollment-era bar, bounded
+    # by AGING_MAX_ALLOWANCE so the threshold cannot erode without limit.
+    effective = threshold
+    if profile.classification == "natural_aging" and profile.confidence >= 0.5:
+        predicted = profile.expected_score - 2.0 * max(profile.volatility, 0.01)
+        floor = threshold - AGING_MAX_ALLOWANCE
+        effective = max(floor, min(threshold, predicted))
+        profile.aging_allowance = round(threshold - effective, 4)
 
     # Score-based decision
-    if raw_score >= threshold:
-        adjusted = raw_score
-        return "approved", adjusted
+    if raw_score >= effective:
+        return "approved", raw_score, effective
 
-    elif raw_score >= (threshold - ESCALATION_BAND):
+    elif raw_score >= (effective - ESCALATION_BAND):
         # In the escalation band — not clearly pass or fail
-        adjusted = raw_score
-        return "escalated", adjusted
+        return "escalated", raw_score, effective
 
     else:
-        adjusted = raw_score
-        return "rejected", adjusted
+        return "rejected", raw_score, effective
 
 
 def _update_drift_profile(db, user_id: str, profile: DriftProfile,

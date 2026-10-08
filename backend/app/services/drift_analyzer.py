@@ -44,6 +44,7 @@ class DriftProfile:
     tenure_months: int = 0
     trust_buffer: float = 0.0
     adjusted_threshold: float = BASE_THRESHOLD
+    aging_allowance: float = 0.0         # extra relaxation granted for aging
     confidence: float = 0.0
     details: dict = None
 
@@ -357,6 +358,14 @@ def generate_explanation(
             "slow, steady, directional drift with low volatility. "
             "This is expected and does not indicate fraud."
         )
+        if profile.aging_allowance > 0:
+            parts.append(
+                f"Because the change matches this user's established aging "
+                f"trend, the acceptance threshold was relaxed by a further "
+                f"{profile.aging_allowance:.2f} to {profile.adjusted_threshold - profile.aging_allowance:.2f}, "
+                f"so they are judged against where their signature is "
+                f"expected to be today rather than at enrollment."
+            )
     elif profile.classification == "medical_event":
         parts.append(
             "A sudden, significant change in signature quality was detected, "

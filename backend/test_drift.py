@@ -29,6 +29,7 @@ from app.database.db import get_db, init_db
 from app.models.embedding import extract_embedding
 from app.services.signature_proc import extract_stroke_features
 from app.services.drift_analyzer import analyze_drift, generate_explanation
+from app.services.verification import _make_decision
 
 DATASET = Path("../dataset/CEDAR")
 
@@ -193,20 +194,19 @@ def simulate_user(scenario: str):
     print(f"  Confidence:           {profile.confidence:.3f}")
     print(f"\n  Details: {profile.details}")
 
-    # Generate explanation as if this were a real verification
+    # Run the REAL decision engine, not a copy of it — otherwise the
+    # simulation can report a verdict the live system would never give.
     mock_score = scores[-1]
-    decision = "approved"
-    if profile.classification == "forgery_attempt":
-        decision = "rejected"
-    elif profile.classification == "medical_event":
-        decision = "escalated"
-    elif mock_score < profile.adjusted_threshold:
-        decision = "rejected"
+    decision, _, effective_threshold = _make_decision(
+        mock_score, profile.adjusted_threshold, profile)
 
     reason = generate_explanation(profile, mock_score, decision)
 
     print(f"\n{'─' * 65}")
     print(f"  FINAL DECISION: {decision.upper()}")
+    print(f"  Score {mock_score:.3f} vs effective threshold {effective_threshold:.3f}", end="")
+    print(f"  (aging allowance {profile.aging_allowance:.3f})"
+          if profile.aging_allowance else "")
     print(f"{'─' * 65}")
     print(f"\n  Reason: {reason}\n")
 

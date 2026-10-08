@@ -41,6 +41,13 @@ MAX_TRUST_BUFFER = 0.03
 TENURE_BUFFER_RATE = 0.0015    # per month
 ESCALATION_BAND = 0.05
 
+# Natural-aging allowance: when drift is confidently classified as natural
+# aging, the system judges the signature against the trend's prediction for
+# today instead of a static bar — rejecting someone for growing older is the
+# failure this project exists to prevent. Bounded so the threshold cannot
+# drift away indefinitely (and forgery/medical patterns bypass it entirely).
+AGING_MAX_ALLOWANCE = 0.15
+
 # ── Drift Analysis ──
 MIN_SAMPLES_FOR_DRIFT = 5
 DRIFT_WINDOW_MONTHS = 24

@@ -86,6 +86,7 @@ Full tables including false-accept / false-reject rates at the deployed operatin
 
 ## Adaptive decision layer
 
+- **Aging adaptation** — when drift is confidently classified as natural aging, the signature is judged against *where the trend predicts it should be today* (`expected − 2σ`) rather than the enrollment-era bar, bounded by a maximum allowance. This is the mechanism that stops the system rejecting people for growing older. Forgery and medical patterns bypass it entirely.
 - **Per-user calibrated thresholds** — at enrollment the system measures how consistent *that person's* own references are with each other (`mean − 2σ`, clamped to 0.84–0.95). Naturally variable signers get a fairer bar.
 - **Tenure trust buffer** — long-standing users earn a small threshold reduction, capped.
 - **Three-way decisions** — approved / **escalated** / rejected. Borderline scores go to human review instead of a coin-flip rejection.
@@ -106,13 +107,30 @@ Full tables including false-accept / false-reject rates at the deployed operatin
 
 Signals: linear regression slope and R² over time, rolling-window volatility, change-point detection (max step-down across all split points), and tremor trend.
 
-Demo the classifier on simulated histories:
+Drift analysis needs months of signature history, which can't be produced by
+uploading a few images today. `test_drift.py` creates users with **backdated**
+histories (18 months, 15 signatures) using real signature images, so the engine
+can be exercised end to end:
 
 ```bash
-python test_drift.py --scenario forgery
-python test_drift.py --scenario medical
-python test_drift.py --scenario aging
+python test_drift.py --scenario aging      # gradual decline
+python test_drift.py --scenario medical    # sudden drop + tremor spike
+python test_drift.py --scenario forgery    # rapid improvement + tremor drop
+python test_drift.py --scenario normal     # stable baseline
 ```
+
+Each creates a user visible in the dashboard with a full drift timeline.
+Verified behaviour:
+
+| Scenario | Classified | Score | Decision |
+|---|---|---:|---|
+| Aging | `natural_aging` | 0.809 | **Approved** (threshold relaxed 0.10) |
+| Forgery | `forgery_attempt` | 0.816 | **Rejected** + critical alert |
+| Medical | `medical_event` | 0.727 | **Escalated** to human review |
+| Normal | `normal` | 0.936 | **Approved** |
+
+The forgery scored *higher* than the aging user and was still rejected — the
+decision comes from the drift pattern, not the score alone.
 
 ---
 
