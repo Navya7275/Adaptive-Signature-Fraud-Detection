@@ -1,0 +1,30 @@
+# Core backend
+fastapi==0.115.0
+uvicorn==0.30.6
+python-multipart==0.0.9
+
+# ML / DL
+# IMPORTANT: plain `pip install -r requirements.txt` installs the CPU-only
+# torch wheel from PyPI, which silently disables GPU training. For CUDA:
+#   pip install torch==2.2.2 torchvision==0.17.2 --index-url https://download.pytorch.org/whl/cu121
+# Verify with: python -c "import torch; print(torch.cuda.is_available())"
+torch==2.2.2
+torchvision==0.17.2
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.5.1
+
+# Image processing
+opencv-python==4.10.0.84
+Pillow==10.4.0
+
+# Plotting (results figures)
+# contourpy is pinned: its 1.4+ releases require numpy>=2.0, which is
+# incompatible with torch 2.2.2 (compiled against numpy 1.x). Installing
+# matplotlib unpinned silently upgrades numpy and breaks torch.
+matplotlib==3.9.2
+contourpy==1.2.1
+
+# Utilities
+uuid7==0.1.0
+python-dateutil==2.9.0

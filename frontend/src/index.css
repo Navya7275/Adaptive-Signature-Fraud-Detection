@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html, body {
+    @apply h-full;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900 dark:bg-surface dark:text-neutral-100 font-sans;
+    background-image: radial-gradient(
+      ellipse 80% 60% at 50% -20%,
+      rgba(99, 102, 241, 0.08),
+      transparent
+    );
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    background-image: radial-gradient(
+      ellipse 80% 60% at 50% -20%,
+      rgba(99, 102, 241, 0.15),
+      transparent
+    );
+  }
+
+  #root {
+    @apply min-h-full;
+  }
+
+  ::selection {
+    @apply bg-accent/30;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-300 dark:bg-neutral-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-400 dark:bg-neutral-600;
+  }
+}
+
+@layer components {
+  /* Glassmorphism card */
+  .glass {
+    @apply backdrop-blur-xl bg-white/70 dark:bg-surface-card/70 border border-neutral-200/80 dark:border-surface-border;
+  }
+
+  /* Floating card with hover */
+  .card-float {
+    @apply bg-white dark:bg-surface-card border border-neutral-200 dark:border-surface-border rounded-2xl shadow-float transition-all duration-300 ease-out;
+  }
+
+  .card-float:hover {
+    @apply -translate-y-0.5 shadow-float-lg border-neutral-300 dark:border-neutral-700;
+  }
+
+  /* Subtle accent glow on hover */
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+
+  .hover-glow:hover {
+    @apply shadow-glow;
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-gradient-to-br from-accent-light to-accent bg-clip-text text-transparent;
+  }
+
+  /* Button base */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent/40 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-white hover:bg-accent-hover active:scale-[0.98] shadow-sm hover:shadow-glow;
+  }
+
+  .btn-secondary {
+    @apply btn bg-neutral-100 dark:bg-surface-elevated text-neutral-900 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-200 dark:border-surface-border;
+  }
+
+  .btn-ghost {
+    @apply btn text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-surface-elevated hover:text-neutral-900 dark:hover:text-neutral-100;
+  }
+
+  /* Input field */
+  .input {
+    @apply w-full px-4 py-2.5 rounded-xl bg-white dark:bg-surface-elevated border border-neutral-200 dark:border-surface-border text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/50 transition-all placeholder:text-neutral-400;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

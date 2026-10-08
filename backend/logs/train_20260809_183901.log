@@ -1,0 +1,98 @@
+[Train] Using device: cuda
+[Train] GPU: NVIDIA GeForce RTX 4060 Laptop GPU
+[Train] VRAM: 8.0 GB
+[Train] CuDNN benchmark: ENABLED
+
+[Train] Loading dataset from: ../dataset/CEDAR,../dataset/SYNTH,../dataset/Hindi,../dataset/archive (1)/extract
+[Dataset] Loading ..\dataset\CEDAR (CEDAR, 55 writers, offset=0)
+[Dataset] Loading ..\dataset\SYNTH (CEDAR, 100 writers, offset=1000)
+[Dataset] Loading ..\dataset\Hindi (BHSig260, 160 writers, offset=2000)
+[Dataset] Loading ..\dataset\archive (1)\extract (forg-dirs, 1372 writers, offset=3000)
+[Dataset] Total writers with genuine: 1001
+[Dataset] Total writers with forged: 1001
+[Dataset] Total writers with BOTH: 1001
+  Writer 1002: 24 genuine, 24 forged
+  Writer 2152: 24 genuine, 30 forged
+  Writer 3462: 11 genuine, 11 forged
+[Dataset] train: 800 writers, 48000 pairs/epoch (resampled every epoch)
+[Dataset] Loading ..\dataset\CEDAR (CEDAR, 55 writers, offset=0)
+[Dataset] Loading ..\dataset\SYNTH (CEDAR, 100 writers, offset=1000)
+[Dataset] Loading ..\dataset\Hindi (BHSig260, 160 writers, offset=2000)
+[Dataset] Loading ..\dataset\archive (1)\extract (forg-dirs, 1372 writers, offset=3000)
+[Dataset] Total writers with genuine: 1001
+[Dataset] Total writers with forged: 1001
+[Dataset] Total writers with BOTH: 1001
+  Writer 1002: 24 genuine, 24 forged
+  Writer 2152: 24 genuine, 30 forged
+  Writer 3462: 11 genuine, 11 forged
+[Dataset] val: 201 writers, 12060 pairs (fixed)
+
+[Train] Model parameters: 2,068,793 (trainable: 2,068,793)
+[Train] Batch size: 32
+[Train] Learning rate: 0.0004
+[Train] Epochs: 20
+[Train] Contrastive margin: 1.0
+[Train] Mixed precision (AMP): ENABLED
+[Train] Model will be saved to: D:\Navya Singhal\Project Folder\adaptive-signature-fraud-detection\backend\trained_models\siamese_model.pth
+=================================================================
+......................................................................................................................................................
+Epoch 01/20 | Train Loss: 0.9819 Acc: 0.578 | Val Loss: 0.9029 Acc: 0.688 | Dist gen/forg: 0.417/0.606 | LR: 0.000400 | Time: 359.0s
+  * Saved best model (val_acc=0.688, val_loss=0.9029)
+......................................................................................................................................................
+Epoch 02/20 | Train Loss: 0.8545 Acc: 0.709 | Val Loss: 0.7844 Acc: 0.765 | Dist gen/forg: 0.388/0.631 | LR: 0.000398 | Time: 322.0s
+  * Saved best model (val_acc=0.765, val_loss=0.7844)
+......................................................................................................................................................
+Epoch 03/20 | Train Loss: 0.7579 Acc: 0.768 | Val Loss: 0.7374 Acc: 0.783 | Dist gen/forg: 0.377/0.649 | LR: 0.000390 | Time: 327.7s
+  * Saved best model (val_acc=0.783, val_loss=0.7374)
+......................................................................................................................................................
+Epoch 04/20 | Train Loss: 0.6822 Acc: 0.805 | Val Loss: 0.7339 Acc: 0.796 | Dist gen/forg: 0.373/0.634 | LR: 0.000379 | Time: 488.9s
+  * Saved best model (val_acc=0.796, val_loss=0.7339)
+......................................................................................................................................................
+Epoch 05/20 | Train Loss: 0.6279 Acc: 0.831 | Val Loss: 0.7249 Acc: 0.798 | Dist gen/forg: 0.372/0.653 | LR: 0.000363 | Time: 307.6s
+  * Saved best model (val_acc=0.798, val_loss=0.7249)
+......................................................................................................................................................
+Epoch 06/20 | Train Loss: 0.5879 Acc: 0.849 | Val Loss: 0.7404 Acc: 0.793 | Dist gen/forg: 0.395/0.687 | LR: 0.000343 | Time: 330.7s
+......................................................................................................................................................
+Epoch 07/20 | Train Loss: 0.5524 Acc: 0.863 | Val Loss: 0.7198 Acc: 0.799 | Dist gen/forg: 0.371/0.657 | LR: 0.000319 | Time: 316.2s
+  * Saved best model (val_acc=0.799, val_loss=0.7198)
+......................................................................................................................................................
+Epoch 08/20 | Train Loss: 0.5234 Acc: 0.874 | Val Loss: 0.7408 Acc: 0.799 | Dist gen/forg: 0.375/0.644 | LR: 0.000293 | Time: 2123.3s
+  * Saved best model (val_acc=0.799, val_loss=0.7408)
+......................................................................................................................................................
+Epoch 09/20 | Train Loss: 0.4808 Acc: 0.890 | Val Loss: 0.7167 Acc: 0.810 | Dist gen/forg: 0.348/0.616 | LR: 0.000265 | Time: 570.9s
+  * Saved best model (val_acc=0.810, val_loss=0.7167)
+......................................................................................................................................................
+Epoch 10/20 | Train Loss: 0.4510 Acc: 0.902 | Val Loss: 0.7444 Acc: 0.802 | Dist gen/forg: 0.350/0.618 | LR: 0.000235 | Time: 347.4s
+......................................................................................................................................................
+Epoch 11/20 | Train Loss: 0.4262 Acc: 0.913 | Val Loss: 0.7374 Acc: 0.810 | Dist gen/forg: 0.371/0.656 | LR: 0.000204 | Time: 356.5s
+  * Saved best model (val_acc=0.810, val_loss=0.7374)
+......................................................................................................................................................
+Epoch 12/20 | Train Loss: 0.3936 Acc: 0.925 | Val Loss: 0.7493 Acc: 0.808 | Dist gen/forg: 0.378/0.670 | LR: 0.000173 | Time: 394.4s
+......................................................................................................................................................
+Epoch 13/20 | Train Loss: 0.3747 Acc: 0.930 | Val Loss: 0.7691 Acc: 0.799 | Dist gen/forg: 0.349/0.620 | LR: 0.000143 | Time: 369.8s
+......................................................................................................................................................
+Epoch 14/20 | Train Loss: 0.3474 Acc: 0.941 | Val Loss: 0.7442 Acc: 0.814 | Dist gen/forg: 0.353/0.631 | LR: 0.000115 | Time: 374.4s
+  * Saved best model (val_acc=0.814, val_loss=0.7442)
+......................................................................................................................................................
+Epoch 15/20 | Train Loss: 0.3335 Acc: 0.944 | Val Loss: 0.7404 Acc: 0.812 | Dist gen/forg: 0.351/0.628 | LR: 0.000089 | Time: 473.2s
+......................................................................................................................................................
+Epoch 16/20 | Train Loss: 0.3170 Acc: 0.949 | Val Loss: 0.7409 Acc: 0.815 | Dist gen/forg: 0.358/0.642 | LR: 0.000065 | Time: 461.4s
+  * Saved best model (val_acc=0.815, val_loss=0.7409)
+......................................................................................................................................................
+Epoch 17/20 | Train Loss: 0.3044 Acc: 0.954 | Val Loss: 0.7579 Acc: 0.812 | Dist gen/forg: 0.352/0.633 | LR: 0.000045 | Time: 319.4s
+......................................................................................................................................................
+Epoch 18/20 | Train Loss: 0.2944 Acc: 0.956 | Val Loss: 0.7605 Acc: 0.813 | Dist gen/forg: 0.354/0.635 | LR: 0.000029 | Time: 320.9s
+......................................................................................................................................................
+Epoch 19/20 | Train Loss: 0.2928 Acc: 0.958 | Val Loss: 0.7543 Acc: 0.818 | Dist gen/forg: 0.351/0.631 | LR: 0.000018 | Time: 363.4s
+  * Saved best model (val_acc=0.818, val_loss=0.7543)
+......................................................................................................................................................
+Epoch 20/20 | Train Loss: 0.2855 Acc: 0.959 | Val Loss: 0.7555 Acc: 0.817 | Dist gen/forg: 0.352/0.632 | LR: 0.000010 | Time: 319.7s
+
+=================================================================
+[Train] DONE!
+[Train] Best validation loss: 0.7543
+[Train] Best validation accuracy: 0.818
+[Train] Model saved to: D:\Navya Singhal\Project Folder\adaptive-signature-fraud-detection\backend\trained_models\siamese_model.pth
+=================================================================
+[Train] Log saved to:     D:\Navya Singhal\Project Folder\adaptive-signature-fraud-detection\backend\logs\train_20260809_183901.log
+[Train] Metrics CSV:      D:\Navya Singhal\Project Folder\adaptive-signature-fraud-detection\backend\logs\metrics_20260809_183901.csv

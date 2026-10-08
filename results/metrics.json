@@ -1,0 +1,72 @@
+{
+  "All held-out writers": {
+    "writers": 201,
+    "pairs": 12060,
+    "genuine_pairs": 6030,
+    "forged_pairs": 6030,
+    "roc_auc": 0.8837149520501418,
+    "eer": 0.18416252072968492,
+    "best_accuracy": 0.8208126036484246,
+    "best_threshold_cosine": 0.901187857357399,
+    "genuine_similarity_mean": 0.9393537640571594,
+    "forged_similarity_mean": 0.8003230690956116,
+    "far_at_deployed": 0.21077943615257047,
+    "frr_at_deployed": 0.14875621890547264
+  },
+  "CEDAR (English)": {
+    "writers": 16,
+    "pairs": 960,
+    "genuine_pairs": 480,
+    "forged_pairs": 480,
+    "roc_auc": 0.9257291666666666,
+    "eer": 0.14375000000000002,
+    "best_accuracy": 0.859375,
+    "best_threshold_cosine": 0.8994169077005196,
+    "genuine_similarity_mean": 0.9399197101593018,
+    "forged_similarity_mean": 0.8241250514984131,
+    "far_at_deployed": 0.16041666666666668,
+    "frr_at_deployed": 0.12291666666666666
+  },
+  "SYNTH (generated)": {
+    "writers": 27,
+    "pairs": 1620,
+    "genuine_pairs": 810,
+    "forged_pairs": 810,
+    "roc_auc": 0.8777366255144032,
+    "eer": 0.21543209876543207,
+    "best_accuracy": 0.8191358024691358,
+    "best_threshold_cosine": 0.9364518776580506,
+    "genuine_similarity_mean": 0.9820672869682312,
+    "forged_similarity_mean": 0.8022632598876953,
+    "far_at_deployed": 0.408641975308642,
+    "frr_at_deployed": 0.0
+  },
+  "BHSig260 (Hindi)": {
+    "writers": 31,
+    "pairs": 1860,
+    "genuine_pairs": 930,
+    "forged_pairs": 930,
+    "roc_auc": 0.9554179673950745,
+    "eer": 0.10967741935483868,
+    "best_accuracy": 0.9010752688172043,
+    "best_threshold_cosine": 0.9045620379146153,
+    "genuine_similarity_mean": 0.9544782042503357,
+    "forged_similarity_mean": 0.7607389092445374,
+    "far_at_deployed": 0.14301075268817204,
+    "frr_at_deployed": 0.05913978494623656
+  },
+  "sign_data (real)": {
+    "writers": 127,
+    "pairs": 7620,
+    "genuine_pairs": 3810,
+    "forged_pairs": 3810,
+    "roc_auc": 0.878763717527435,
+    "eer": 0.1988188976377953,
+    "best_accuracy": 0.8031496062992126,
+    "best_threshold_cosine": 0.8960988920043018,
+    "genuine_similarity_mean": 0.9265099167823792,
+    "forged_similarity_mean": 0.8065741658210754,
+    "far_at_deployed": 0.19160104986876642,
+    "frr_at_deployed": 0.20551181102362204
+  }
+}

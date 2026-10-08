@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+env/
+
+# Environment variables
+.env
+
+# Node
+node_modules/
+frontend/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Personal notes (not for the public repo)
+INTERVIEW_PREP.md
+command.txt
+
+# Datasets (large — download/generate locally, see README)
+dataset/
+
+# Runtime data (user signatures, database)
+backend/data/
+
+# Trained models — ship the final model (7.9 MB) so the repo runs
+# out of the box; ignore the intermediate backups from experiments.
+backend/trained_models/*
+!backend/trained_models/siamese_model.pth
+
+# Training logs: keep the final run's metrics (used for the results
+# figures), ignore the noise from earlier experiments.
+backend/logs/*
+!backend/logs/metrics_20260809_183901.csv
+!backend/logs/train_20260809_183901.log
